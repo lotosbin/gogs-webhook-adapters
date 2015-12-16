@@ -1,0 +1,1 @@
+# gogs-webhook-adapters
