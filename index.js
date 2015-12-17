@@ -96,11 +96,11 @@ app.post('/gogs2talkai', function(request, response) {
 }*/
     //call talk.ai
     var data = {
-  "authorName": "Stack",                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
-  "title": "Winter is coming",                    // 聚合消息标题
-  "text": "",                                     // 聚合消息正文
-  "redirectUrl": "https://talk.ai/site",          // 跳转链接
-  "imageUrl": "http://your.image.url"             // 消息中可添加一张预览图片
+  "authorName": request.body.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
+  "title": request.body.ref + ' ' + request.body.after,                    // 聚合消息标题
+  "text": JSON.stringify(request.body.commits),                                     // 聚合消息正文
+  "redirectUrl": request.body.compare_url,          // 跳转链接
+  "imageUrl": request.body.sender.avatar_url             // 消息中可添加一张预览图片
 };
   var request = require('request');
     request({url:'https://jianliao.com/v2/services/webhook/06c695dc8517caa76e40679dcad20c905635ad40',
