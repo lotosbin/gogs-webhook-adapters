@@ -28,8 +28,8 @@ app.post('/github2talkai', function(request, response) {
     var rdata = JSON.parse(request.body);
     var data = {
   "authorName": rdata.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
-  "title": rdata.comment.body,
-  "text": JSON.stringify(rdata),                                     // 聚合消息正文
+  "title": rdata.compare,
+  "text": JSON.stringify(rdata.commits),                                     // 聚合消息正文
   "redirectUrl": radata.repository.html_url,          // 跳转链接
   "imageUrl": rdata.sender.avatar_url             // 消息中可添加一张预览图片
     };
