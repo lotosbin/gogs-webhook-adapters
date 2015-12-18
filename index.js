@@ -43,7 +43,7 @@ app.post('/github2talkai', function(request, response) {
     var data = {
   "authorName": request.body.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
   "title": request.body.comment.body,
-  "text": JSON.stringify(request.body),                                     // 聚合消息正文
+  "text": JSON.stringify(request.body.comment),                                     // 聚合消息正文
   "redirectUrl": request.body.repository.html_url,          // 跳转链接
   "imageUrl": request.body.sender.avatar_url             // 消息中可添加一张预览图片
 };
