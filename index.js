@@ -1,20 +1,7 @@
 var express = require('express');
+var talkaiwebhook = require('./talkaiwebhook');
 // Create an express web app
 var app = express();
-function talkaiwebhook(talkaiurl,data){
-
-  var request = require('request');
-    request({url:talkaiurl,
-    method:'POST',
-    form:data},function(error,response,body){
-      if(error){
-        console.log(error);
-      }
-      else{
-
-      }
-    });
-}
 // Use middleware to parse incoming form bodies
 var parser = require('body-parser');
 app.use(parser.urlencoded({extended:true}));
@@ -38,12 +25,13 @@ app.post('/gogs2talkai', function(request, response) {
 app.post('/github2talkai', function(request, response) {
     console.log(request.body);
     var talkaiurl = request.query.url;
+    var rdata = JSON.parse(request.body);
     var data = {
-  "authorName": request.body.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
-  "title": request.body.comment.body,
-  "text": JSON.stringify(request.body),                                     // 聚合消息正文
-  "redirectUrl": request.body.repository.html_url,          // 跳转链接
-  "imageUrl": request.body.sender.avatar_url             // 消息中可添加一张预览图片
+  "authorName": rdata.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
+  "title": rdata.comment.body,
+  "text": JSON.stringify(rdata),                                     // 聚合消息正文
+  "redirectUrl": radata.repository.html_url,          // 跳转链接
+  "imageUrl": rdata.sender.avatar_url             // 消息中可添加一张预览图片
     };
     talkaiwebhook(talkaiurl,data);
     response.type('text/xml');
