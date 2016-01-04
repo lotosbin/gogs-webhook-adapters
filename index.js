@@ -15,7 +15,7 @@ app.post('/gogs2talkai', function(request, response) {
     var text =_.reduce(_.map(request.body.commits,function(e){return e.message}),function(result,e){return result+'\n'+e;});
     var data = {
   "authorName": request.body.sender.login,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
-  "title": request.body.repository.namei+' ' +request.body.repository.description+ ' ' + request.body.ref + ' ' + request.body.after,                    // 聚合消息标题
+  "title": request.body.repository.name+' ' +request.body.repository.description+ ' ' + request.body.ref + ' ' + request.body.after,                    // 聚合消息标题
   "text": text,
   "redirectUrl": request.body.compare_url,          // 跳转链接
   "imageUrl": request.body.sender.avatar_url             // 消息中可添加一张预览图片
