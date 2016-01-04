@@ -21,6 +21,7 @@
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "request": "^2.67.0",
-    "jsonfile": "~2.2.3"
+    "jsonfile": "~2.2.3",
+    "lodash": "~3.10.1"
   }
 }
