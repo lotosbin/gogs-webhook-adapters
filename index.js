@@ -39,7 +39,21 @@ app.post('/github2talkai', function(request, response) {
     response.type('text/xml');
     response.send('');
 });
-
+app.post('/oschina2talkai',function(request, response) {
+  console.log(request.body);
+    var talkaiurl = request.query.url;
+    var b = request.body;
+    var rdata = JSON.parse(request.body).push_data;
+    var data = {
+  "authorName": rdata.user.name,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
+  "title": rdata.commits[0].message,
+  "text": JSON.stringify(rdata.commits),                                     // 聚合消息正文
+  "redirectUrl": radata.repository.url          // 跳转链接f
+    };
+    talkaiwebhook(talkaiurl,data);
+    response.type('text/xml');
+    response.send('');
+});
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
 app.listen(process.env.PORT || 3000);
