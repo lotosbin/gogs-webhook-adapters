@@ -63,16 +63,17 @@ app.use(r.post('/oschina2talkai', ({request, response}) => {
 }));
 app.use(r.post('/oschina2qqbot', ({request, response}) => {
     console.log(request.body);
-    const rdata = JSON.parse(request.body).push_data;
+    let {type, to} = request.query;
+    const rdata = request.body;
     const data = {
-        "authorName": rdata.user.name,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
+        "authorName": rdata.sender.username,                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题
         "title": rdata.commits[0].message,
         "text": JSON.stringify(rdata.commits),                                     // 聚合消息正文
-        "redirectUrl": radata.repository.url          // 跳转链接f
+        "redirectUrl": rdata.repository.url          // 跳转链接f
     };
-    qqbot('group', 'test', `${data.authorName},${data.title},${data.text},${data.redirectUrl}`);
-    response.type('text/xml');
-    response.send('');
+    qqbot(type, to, `${data.authorName},${data.title},${data.text},${data.redirectUrl}`);
+    response.type = 'json';
+    response.body = {}
 }));
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
