@@ -75,6 +75,14 @@ app.use(r.post('/oschina2qqbot', ({request, response}) => {
     response.type = 'json';
     response.body = {}
 }));
+app.use(r.post('/slack2qqbot', ({request, response}) => {
+    console.log(request.body);
+    let {type, to} = request.query;
+    let {team_domain, channel_name, user_name, text} = request.body;
+    qqbot(type, to, `${team_domain}:${channel_name}:${user_name}:${text}`);
+    response.type = 'json';
+    response.body = {}
+}));
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
 const server = app.listen(process.env.PORT || 3000);
